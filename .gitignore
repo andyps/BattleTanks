@@ -1,0 +1,13 @@
+# Visual Studio generated files
+*/.vs
+*.VC.db
+*.VC.opendb
+
+# Unreal generated files
+*/Intermediate
+*/Binaries
+*/Build
+*/Saved
+*/DerivedDataCache
+*/Content/StarterContent/Textures
+*/Content/StarterContent/HDRI
