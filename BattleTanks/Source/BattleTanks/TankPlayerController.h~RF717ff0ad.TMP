@@ -20,7 +20,6 @@ public:
 	
 	void Tick(float DeltaTime) override;
 
-private:
 	ATank* GetControlledTank() const;
 
 	// Start the tank moving the barrel so that a shot would hit where
@@ -29,11 +28,7 @@ private:
 
 	bool GetSightRayHitLocation(OUT FVector& HitLocation) const;
 
-	bool GetLookDirection(FVector2D ScreenLocation, FVector& LookDirection) const;
-
-	UPROPERTY(EditAnywhere)
 	float CrossHairXLocation = 0.5;
 
-	UPROPERTY(EditAnywhere)
 	float CrossHairYLocation = 0.33333;
 };
