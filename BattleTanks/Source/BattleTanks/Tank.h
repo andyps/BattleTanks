@@ -9,6 +9,7 @@
 class UTankBarrel;
 class UTankTurret;
 class UTankAimingComponent;
+class AProjectile;
 
 UCLASS()
 class BATTLETANKS_API ATank : public APawn
@@ -41,4 +42,10 @@ protected:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
+
+	UPROPERTY(EditAnywhere, Category = Setup)
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+
+	// Local barrel ref for spawning projectile
+	UTankBarrel* Barrel = nullptr;
 };
