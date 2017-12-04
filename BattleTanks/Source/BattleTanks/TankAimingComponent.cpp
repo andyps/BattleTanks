@@ -5,6 +5,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "TankBarrel.h"
 #include "TankTurret.h"
+#include "Projectile.h"
 
 // Sets default values for this component's properties
 UTankAimingComponent::UTankAimingComponent()
@@ -35,7 +36,8 @@ void UTankAimingComponent::TickComponent(float DeltaTime, ELevelTick TickType, F
 	// ...
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+//void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
+void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!Barrel) return;
 
@@ -71,7 +73,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed)
 	
 
 }
-
+/*
 void UTankAimingComponent::SetBarrelReference(UTankBarrel * BarrelToSet)
 {
 	Barrel = BarrelToSet;
@@ -81,9 +83,17 @@ void UTankAimingComponent::SetTurretReference(UTankTurret * TurretToSet)
 {
 	Turret = TurretToSet;
 }
+*/
+void UTankAimingComponent::Initialise(UTankBarrel * BarrelToSet, UTankTurret * TurretToSet)
+{
+	Barrel = BarrelToSet;
+	Turret = TurretToSet;
+}
 
 void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 {
+	if (!Barrel || !Turret) return;
+
 	// work out difference between current barrel rotation and AimDirection
 	auto BarrelRotator = Barrel->GetForwardVector().Rotation();
 	auto AimAsRotator = AimDirection.Rotation();
@@ -95,3 +105,25 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 	Turret->Rotate(DeltaRotator.Yaw);
 }
 
+void UTankAimingComponent::Fire()
+{
+	if (!ensure(Barrel)) return;
+
+	bool IsReloaded = (FPlatformTime::Seconds() - LastFireTime) > ReloadTimeInSeconds;
+
+	if (IsReloaded)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("ATank::Fire!"));
+
+		// Spawn a projectile at the socket location on the barrel
+		auto Projectile = GetWorld()->SpawnActor<AProjectile>(
+			ProjectileBlueprint,
+			Barrel->GetSocketLocation(FName("Projectile")),
+			Barrel->GetSocketRotation(FName("Projectile"))
+			);
+
+		Projectile->LaunchProjectile(LaunchSpeed);
+
+		LastFireTime = FPlatformTime::Seconds();
+	}
+}

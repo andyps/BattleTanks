@@ -6,7 +6,8 @@
 #include "GameFramework/PlayerController.h"
 #include "TankPlayerController.generated.h"
 
-class ATank;
+// class ATank;
+class UTankAimingComponent;
 
 /**
  * 
@@ -22,8 +23,12 @@ public:
 	void Tick(float DeltaTime) override;
 
 protected:
+	/*
 	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const;
+	*/
+	UFUNCTION(BlueprintImplementableEvent, Category = Setup)
+	void FoundAimingComponent(UTankAimingComponent* AimCompRef);
 
 private:
 	// Start the tank moving the barrel so that a shot would hit where
