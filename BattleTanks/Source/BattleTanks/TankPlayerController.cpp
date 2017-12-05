@@ -2,7 +2,6 @@
 
 #include "TankPlayerController.h"
 #include "Engine/World.h"
-// #include "Tank.h"
 #include "TankAimingComponent.h"
 
 void ATankPlayerController::BeginPlay()
@@ -30,20 +29,9 @@ void ATankPlayerController::Tick(float DeltaTime)
 
 	AimTowardsCrosshair();
 }
-/*
-ATank* ATankPlayerController::GetControlledTank() const
-{
-	return Cast<ATank>(GetPawn());
-}
-*/
+
 void ATankPlayerController::AimTowardsCrosshair()
 {
-	/*
-	if (!GetControlledTank())
-	{
-		return;
-	}
-	*/
 	auto Pawn = GetPawn();
 	if (!Pawn) {
 		return;
@@ -53,7 +41,6 @@ void ATankPlayerController::AimTowardsCrosshair()
 	if (GetSightRayHitLocation(HitLocation))
 	{
 		// Tell controlled tank to aim at this point
-		// GetControlledTank()->AimAt(HitLocation);
 		AimingComponent->AimAt(HitLocation);
 	}
 		
