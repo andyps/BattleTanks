@@ -59,6 +59,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	void Fire();
+
+	EFiringState GetFiringState() const;
 	
 private:
 	UTankBarrel* Barrel = nullptr;

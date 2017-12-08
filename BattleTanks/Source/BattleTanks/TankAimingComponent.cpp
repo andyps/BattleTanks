@@ -98,8 +98,15 @@ void UTankAimingComponent::MoveBarrelTowards(FVector AimDirection)
 
 	// Move the barrel
 	Barrel->Elevate(DeltaRotator.Pitch);
-	// Move the turret
-	Turret->Rotate(DeltaRotator.Yaw);
+	// Move the turret the shortest way
+	if (FMath::Abs(DeltaRotator.Yaw) < 180)
+	{
+		Turret->Rotate(DeltaRotator.Yaw);
+	}
+	else
+	{
+		Turret->Rotate(DeltaRotator.Yaw - FMath::Sign(DeltaRotator.Yaw) * 360);
+	}
 }
 
 bool UTankAimingComponent::IsBarrelMoving()
@@ -131,4 +138,9 @@ void UTankAimingComponent::Fire()
 
 		LastFireTime = FPlatformTime::Seconds();
 	}
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const
+{
+	return FiringState;
 }
