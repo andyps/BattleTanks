@@ -44,6 +44,9 @@ protected:
 	UPROPERTY(EditDefaultsOnly, Category = Firing)
 	float ReloadTimeInSeconds = 3;
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing)
+	int32 RoundsLeft = 3;
+
 	double LastFireTime = 0;
 
 	UPROPERTY(EditDefaultsOnly, Category = Setup)
@@ -65,7 +68,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing)
 	int32 GetRoundsLeft() const;
-	
+
 private:
 	UTankBarrel* Barrel = nullptr;
 
@@ -76,6 +79,4 @@ private:
 	bool IsBarrelMoving();
 
 	FVector AimDirection;
-
-	int32 RoundsLeft = 3;
 };
