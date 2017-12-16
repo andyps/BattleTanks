@@ -40,8 +40,9 @@ float ATank::GetHealthPercent() const
 void ATank::BeginPlay()
 {
 	auto TankName = GetName();
-	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay Before Super"), *TankName);
+	// UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay Before Super"), *TankName);
 	Super::BeginPlay();
 	
-	UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay"), *TankName);
+	CurrentHealth = StartingHealth;
+	// UE_LOG(LogTemp, Warning, TEXT("%s DONKEY: Tank C++ BeginPlay"), *TankName);
 }

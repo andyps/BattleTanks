@@ -50,10 +50,13 @@ void ATankAIController::SetPawn(APawn * InPawn)
 		UE_LOG(LogTemp, Warning, TEXT("ATankAIController subscribe"));
 		PossessedTank->OnDeath.AddUniqueDynamic(this, &ATankAIController::OnPossessedTankDeath);
 	}
-
 }
 
 void ATankAIController::OnPossessedTankDeath()
 {
-	UE_LOG(LogTemp, Warning, TEXT("ATankAIController received Tank too damaged"));
+	if (!GetPawn())
+	{
+		return;
+	}
+	GetPawn()->DetachFromControllerPendingDestroy();
 }
